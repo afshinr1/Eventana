@@ -1,3 +1,4 @@
+import { Button } from "@material-ui/core";
 import React, { useState } from "react";
 
 function Register() {
@@ -44,7 +45,7 @@ function Register() {
           placeholder="Enter password"
         />
 
-        <input type="submit" />
+        <Button type='submit' color='secondary' variant='contained' >Submit</Button>
       </form>
     </div>
   );
