@@ -1,12 +1,13 @@
 import React, { useState } from "react";
 
-function Login() {
+function Register() {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
+  const [error, setError] = useState(null);
   const handleSubmit = async (e) => {
     e.preventDefault();
-    const data = { username, password, rememberMe : false};
-    fetch("/api/authentication/login", {
+    const data = { username, password, email : "jaja@gmail.com" };
+   const obj = await fetch("/api/authentication/register", {
       method: "post",
       body: JSON.stringify(data),
       headers: {
@@ -14,15 +15,20 @@ function Login() {
         accept: "application/json",
       },
     })
-      .then((obj) => obj.json())
-      .then((res) => console.log(res));
+    if(obj.ok){
+      const res = obj.json();
+      setError("Successfully registered user");
+    }else{
+      obj.json()
+      .then(res => setError(res.error));
+      setError("Error registering new user");
+    }
   };
-  const handleTest = () => {
-    fetch("/api/authentication/test");
-  };
+
   return (
     <div>
-      <h1>Login</h1>
+      <span>{error}</span>
+      <h1>Register</h1>
       <form onSubmit={handleSubmit}>
         <label>Username</label>
         <input
@@ -40,9 +46,8 @@ function Login() {
 
         <input type="submit" />
       </form>
-      <button onClick={handleTest}>Test</button>
     </div>
   );
 }
 
-export default Login;
+export default Register;
