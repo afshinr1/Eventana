@@ -3,7 +3,8 @@ import { createMuiTheme } from '@material-ui/core/styles';
 
 
 export const mainColors = {
-    BACKGROUND_COLOR: "#1e1e2f"
+    BACKGROUND_COLOR: "#1e1e2f",
+    CARD_COLOR: "#2e2e3f",
 }
 
 export const theme = createMuiTheme({
