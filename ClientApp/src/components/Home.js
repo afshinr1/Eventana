@@ -1,7 +1,14 @@
+import { Box } from '@material-ui/core';
 import React, {useEffect} from 'react'
-//import { useDispatch, useSelector} from 'react-redux';
+import { useDispatch, useSelector} from 'react-redux';
+import EventCard from './EventCard/EventCard';
 function Home() {
   //const dispatch = useDispatch();
+  const events = useSelector(state => state.EventsReducer.events);
+  console.log(events);
+
+  const eventCards = events.map(event => <EventCard event={event}/>)
+
   const fetchData = async () => {
     const response = await fetch('/api/events/getEvents');
     if(response.ok){
@@ -13,11 +20,12 @@ function Home() {
   useEffect(() => {
   fetchData();
 
-  }, [])
+  }, []);
+
   return (
-    <div>
-      <h1>Home</h1>
-    </div>
+    <Box component='div'>
+      {eventCards}
+    </Box>
   )
 }
 

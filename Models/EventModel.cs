@@ -17,5 +17,6 @@ namespace Eventana.Models
         public DateTime EndTime { get; set; }
         public double Fee { get; set; }
         public int Capacity { get; set; }
+        public string ImageUrl { get; set; }
     }
 }
