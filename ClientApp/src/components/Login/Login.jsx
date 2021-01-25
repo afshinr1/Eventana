@@ -3,10 +3,12 @@ import React, { useState } from "react";
 function Login() {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
+  const [error, setError] = useState("");
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     const data = { username, password, rememberMe : false};
-    fetch("/api/authentication/login", {
+    const response  = await fetch("/api/authentication/login", {
       method: "post",
       body: JSON.stringify(data),
       headers: {
@@ -14,8 +16,17 @@ function Login() {
         accept: "application/json",
       },
     })
-      .then((obj) => obj.json())
-      .then((res) => console.log(res));
+    if(response.ok){
+      response.json()
+        .then(data =>{
+          console.log(data);
+          sessionStorage.setItem("user", JSON.stringify(data.user));
+          sessionStorage.setItem("token", data.token);
+        });
+    }
+    else{
+      console.log("Log in failure");
+    }
   };
   const handleTest = () => {
     fetch("/api/authentication/test");

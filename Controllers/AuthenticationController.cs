@@ -27,12 +27,23 @@ namespace Eventana.Controllers
 
 
         [HttpPost("login")]
-        public IActionResult Post([FromBody] LoginRequest credentials)
+        public async Task<IActionResult> Post([FromBody] LoginRequest credentials)
         {
 
             string username = credentials.Username;
             string password = credentials.Password;
-            return Ok(username);
+            var result = await SignInManager.PasswordSignInAsync(username, password, isPersistent: false, lockoutOnFailure: false);
+            if (result.Succeeded)
+            {
+                var user = await UserManager.FindByNameAsync(username);
+                var token = await UserManager.CreateSecurityTokenAsync(user);
+                return Ok(new { user = user, token = token});
+            }
+            else
+            {
+                throw new System.Exception("Bad request");
+
+            }
         }
 
         [HttpPost("register")]
@@ -51,12 +62,12 @@ namespace Eventana.Controllers
                 {
                     ModelState.AddModelError("error", "Email or username already in use");
                     return BadRequest(ModelState);
-
                 }
 
-            }else{
-                 ModelState.AddModelError("error", "Please fill out all fields");
-                return BadRequest(ModelState);
+            }
+            else
+            {
+                return BadRequest();
             }
         }
     }
