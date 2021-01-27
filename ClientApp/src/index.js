@@ -19,10 +19,7 @@ const rootReducer = combineReducers({
   EventsReducer: EventsReducer,
 });
 // const composeEnhancer = compose(applyMiddleware(thunk), devToolsEnhancer());
-const store = createStore(rootReducer, /* preloadedState, */ composeWithDevTools(
-  applyMiddleware(thunk),
-
-  ));//Redux end
+const store = createStore(rootReducer, applyMiddleware(thunk));//Redux end
 
 const baseUrl = document.getElementsByTagName("base")[0].getAttribute("href");
 const rootElement = document.getElementById("root");

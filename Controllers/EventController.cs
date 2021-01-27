@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Eventana.Data;
@@ -18,13 +19,17 @@ namespace Eventana.Controllers
             context = _context;
         }
 
-        [Authorize]
-        [HttpGet("getEvents")]
-        public async Task<IActionResult> get()
+        [HttpGet]
+        public async Task<IActionResult> Get()
         {
-            var events = await context.Events.ToListAsync();
+            var check = await context.Events.AnyAsync();
 
-            return Ok();
+            if (check == false)
+            {
+                return NotFound();
+            }
+            var events = await context.Events.ToListAsync();
+            return Ok(events);
         }
 
         [HttpPost("createEvent")]

@@ -5,13 +5,24 @@ import CardContent from "@material-ui/core/CardContent";
 import CardMedia from "@material-ui/core/CardMedia";
 import Typography from "@material-ui/core/Typography";
 import {useStyles } from './EventCard.styles';
+import EventCardModal from '../EventCardModal/EventCardModal';
 
 export default function EventCard({ event }) {
   const classes = useStyles();
+  const [open, setOpen] = React.useState(false);
+
+  const handleOpen = () => {
+    setOpen(true);
+  };
+
+  const handleClose = () => {
+    setOpen(false);
+  };
+
 
   return (
     <Card className={classes.root}>
-      <CardActionArea className={classes.area}>
+      <CardActionArea onClick={handleOpen} className={classes.area}>
         <CardMedia
           className={classes.media}
           image="/static/images/cards/contemplative-reptile.jpg"
@@ -28,6 +39,7 @@ export default function EventCard({ event }) {
           </Typography>
         </CardContent>
       </CardActionArea>
+      <EventCardModal event={event} handleClose={handleClose} open={open} />
     </Card>
   );
 }

@@ -37,7 +37,7 @@ namespace Eventana.Controllers
             {
                 var user = await UserManager.FindByNameAsync(username);
                 var token = await UserManager.CreateSecurityTokenAsync(user);
-                return Ok(new { user = user, token = token});
+                return Ok(new { user = user, token = token });
             }
             else
             {
@@ -69,6 +69,13 @@ namespace Eventana.Controllers
             {
                 return BadRequest();
             }
+        }
+
+        [HttpGet("logout")]
+        public async Task<IActionResult> Logout()
+        {
+           await SignInManager.SignOutAsync();
+           return Ok();
         }
     }
 }

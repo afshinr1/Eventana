@@ -9,7 +9,7 @@ function Home() {
   const classes = useStyles();
 
   const eventCards = events.map((event) => (
-    <Grid item className={classes.innerContainer} xs={12} sm={6} md={4} lg={3}>
+    <Grid key={event.uuid} item className={classes.innerContainer} xs={12} sm={6} md={4} lg={3}>
       <Badge color="error" variant="dot">
         <EventCard event={event} />
       </Badge>
@@ -17,7 +17,9 @@ function Home() {
   ));
 
   const fetchData = async () => {
-    const response = await fetch("/api/events/getEvents");
+    const response = await fetch("/api/events",{
+      method : "Get",
+    });
     if (response.ok) {
       const data = await response.json();
       console.log(data);

@@ -1,10 +1,11 @@
 import React, { useState } from "react";
+import { useHistory } from "react-router-dom";
 
 function Login() {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
-
+  const history = useHistory();
   const handleSubmit = async (e) => {
     e.preventDefault();
     const data = { username, password, rememberMe : false};
@@ -13,7 +14,7 @@ function Login() {
       body: JSON.stringify(data),
       headers: {
         "content-type": "application/json",
-        accept: "application/json",
+        "accept": "application/json",
       },
     })
     if(response.ok){
@@ -22,6 +23,7 @@ function Login() {
           console.log(data);
           sessionStorage.setItem("user", JSON.stringify(data.user));
           sessionStorage.setItem("token", data.token);
+          history.push("/");
         });
     }
     else{

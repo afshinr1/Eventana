@@ -16,6 +16,7 @@ import {
 } from "@material-ui/core";
 import { useHistory } from "react-router-dom";
 import CreateEvent from "../CreateEvent/CreateEvent";
+import Logout from "../Logout/Logout";
 
 export default function Navbar() {
   const classes = useStyles();
@@ -23,7 +24,7 @@ export default function Navbar() {
   const [mobileMoreAnchorEl, setMobileMoreAnchorEl] = React.useState(null);
   const history = useHistory();
   const isMenuOpen = Boolean(anchorEl);
-
+  const token = sessionStorage.getItem("token");
   const handleProfileMenuOpen = (event) => {
     setAnchorEl(event.currentTarget);
   };
@@ -66,6 +67,7 @@ export default function Navbar() {
           <IconButton
             edge="start"
             className={classes.menuButton}
+            onClick={e => history.push('/')}
             color="inherit"
             aria-label="open drawer"
           >
@@ -101,6 +103,7 @@ export default function Navbar() {
             <CreateEvent />
             <Button onClick={(e) => history.push("/login")}>Login</Button>
             <Button onClick={(e) => history.push("/register")}>Register</Button>
+            {token && <Logout />}
           </div>
           <div className={classes.sectionMobile}>
             <IconButton
