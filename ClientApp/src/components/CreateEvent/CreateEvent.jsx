@@ -1,7 +1,19 @@
 import { Button } from '@material-ui/core'
 import React from 'react'
+import CreateEventModal from './CreateEventModal';
 
 function CreateEvent() {
+    const [open, setOpen] = React.useState(false);
+
+    const handleOpen = () => {
+      setOpen(true);
+    };
+
+    const handleClose = () => {
+      setOpen(false);
+    };
+
+
     const createEvent = async (e)=> {
         const response = await fetch('/api/events/createEvent', {
             'authorization': sessionStorage.getItem("token"),
@@ -20,7 +32,8 @@ function CreateEvent() {
     }
     return (
         <>
-            <Button onClick={createEvent} color='primary'>Create</Button>
+            <Button onClick={handleOpen} color='primary'>Create</Button>
+            <CreateEventModal open={open} handleClose={handleClose} />
         </>
     )
 }
