@@ -1,0 +1,22 @@
+
+export default Categories = [
+    "Business",
+    "Food and Drinks",
+"Health",
+ "Music",
+ "Auto, Boat & Air",
+ "Charity & Causes",
+ "Community",
+ "Family & Education",
+ "Fashion",
+ "Film & Media",
+ "Hobbies",
+ "Home & Lifestyle",
+ "Performing & Visual Arts",
+ "Government",
+ "Spirituality",
+ "School Activities",
+ "Science & Tech",
+ "Holiday",
+ "Sports & Fitness",
+];

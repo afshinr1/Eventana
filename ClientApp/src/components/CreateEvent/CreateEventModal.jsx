@@ -5,6 +5,7 @@ import Fade from "@material-ui/core/Fade";
 import {  Grid, TextField, Typography } from "@material-ui/core";
 import { useStyles } from "./CreateEvent.styles";
 import { DateTimePicker } from "@material-ui/pickers";
+import Autocomplete from '@material-ui/lab/Autocomplete';
 
 export default function CreateEventModal({ open, handleClose, event }) {
   const classes = useStyles();
@@ -14,7 +15,7 @@ export default function CreateEventModal({ open, handleClose, event }) {
   const [location, setLocation] = useState("");
   const [fee, setFee] = useState("");
   const [image, setImage] = useState(null);
-  const [categories, setCategories] = useState([]);
+  const [selectedCategories, setCategories] = useState([]);
   const [selectedStartDate, handleStartChange] = useState(new Date());
   const [selectedEndDate, handleEndChange] = useState(new Date());
 
