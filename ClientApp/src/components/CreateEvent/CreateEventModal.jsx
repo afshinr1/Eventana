@@ -2,10 +2,9 @@ import React, { useState } from "react";
 import Modal from "@material-ui/core/Modal";
 import Backdrop from "@material-ui/core/Backdrop";
 import Fade from "@material-ui/core/Fade";
-import { Box, Grid, Input, TextField, Typography } from "@material-ui/core";
+import {  Grid, TextField, Typography } from "@material-ui/core";
 import { useStyles } from "./CreateEvent.styles";
 import { DateTimePicker } from "@material-ui/pickers";
-import { mainColors } from "../../assets/Styles";
 
 export default function CreateEventModal({ open, handleClose, event }) {
   const classes = useStyles();
@@ -45,18 +44,24 @@ export default function CreateEventModal({ open, handleClose, event }) {
               label="Name"
               variant="outlined"
               color="primary"
+              value={name}
+              onChange={e=> setName(e.target.value)}
               className={classes.inputBase}
             />
             <TextField
               label="Description"
               variant="outlined"
               color="primary"
+              value={description}
+              onChange={e=> setDescription(e.target.value)}
               className={classes.inputBase}
             />
             <TextField
               label="Location"
               variant="outlined"
               color="primary"
+              value={location}
+              onChange={e=> setLocation(e.target.value)}
               className={classes.inputBase}
             />
             <Grid
@@ -81,7 +86,6 @@ export default function CreateEventModal({ open, handleClose, event }) {
                   disablePast
                   minDate={selectedStartDate}
                   minDateMessage="End date cannot be before start date"
-                  style={{ color: mainColors.BACKGROUND_COLOR }}
                   value={selectedEndDate}
                   onChange={handleEndChange}
                 />
