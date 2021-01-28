@@ -18,7 +18,6 @@ namespace Eventana.Controllers
         {
             context = _context;
         }
-
         [HttpGet]
         public async Task<IActionResult> Get()
         {
@@ -32,6 +31,7 @@ namespace Eventana.Controllers
             return Ok(events);
         }
 
+        [Authorize]
         [HttpPost("createEvent")]
         public async Task<IActionResult> Create([FromBody] EventModel newEvent)
         {
@@ -42,6 +42,7 @@ namespace Eventana.Controllers
             }
             return BadRequest("Information not sufficient");
         }
+
 
     }
 }

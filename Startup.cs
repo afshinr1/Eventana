@@ -1,4 +1,6 @@
+using System.Text;
 using Eventana.Data;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
@@ -8,6 +10,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Microsoft.IdentityModel.Tokens;
 using Newtonsoft.Json;
 namespace ASPReactApp
 {
@@ -28,14 +31,46 @@ namespace ASPReactApp
 options.UseSqlServer(
     Configuration.GetConnectionString("DefaultConnection")));
 
-            services.AddIdentity<IdentityUser, IdentityRole>((options => {
+            //For identity
+            services.AddIdentity<IdentityUser, IdentityRole>((options =>
+            {
                 options.Password.RequiredLength = 3;
                 options.Password.RequireDigit = false;
                 options.Password.RequiredUniqueChars = 0;
                 options.Password.RequireLowercase = false;
                 options.Password.RequireUppercase = false;
                 options.Password.RequireNonAlphanumeric = false;
-            })).AddEntityFrameworkStores<ApplicationDbContext>();
+            })).AddEntityFrameworkStores<ApplicationDbContext>().AddDefaultTokenProviders();
+
+
+            //For Authentication
+            services.AddAuthentication(option =>
+            {
+                option.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+                option.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+                option.DefaultScheme = JwtBearerDefaults.AuthenticationScheme;
+            })
+            .AddJwtBearer(token =>
+            {
+                token.RequireHttpsMetadata = false;
+                token.SaveToken = true;
+                token.TokenValidationParameters = new TokenValidationParameters()
+                {
+                    ValidateIssuerSigningKey = true,
+                    //Same Secret key will be used while creating the token
+                    IssuerSigningKey = new SymmetricSecurityKey(Encoding.ASCII.GetBytes(Configuration["JWT:SecretKey"])),
+                    ValidateIssuer = true,
+                    //Usually, this is your application base URL
+                    ValidIssuer = Configuration["JWT:ValidIssuer"],
+                    ValidateAudience = true,
+                    //Here, we are creating and using JWT within the same application.
+                    //In this case, base URL is fine.
+                    //If the JWT is created using a web service, then this would be the consumer URL.
+                    ValidAudience = Configuration["JWT:ValidAudience"],
+
+                };
+            });
+
             // In production, the React files will be served from this directory
             services.AddSpaStaticFiles(configuration =>
             {
@@ -60,10 +95,10 @@ options.UseSqlServer(
             app.UseHttpsRedirection();
             app.UseStaticFiles();
             app.UseSpaStaticFiles();
+            app.UseRouting();
 
             app.UseAuthentication();
-
-            app.UseRouting();
+            app.UseAuthorization();
 
             app.UseEndpoints(endpoints =>
             {

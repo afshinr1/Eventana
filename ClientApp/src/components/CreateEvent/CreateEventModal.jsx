@@ -1,13 +1,23 @@
-import React from "react";
+import React, { useState } from "react";
 import Modal from "@material-ui/core/Modal";
 import Backdrop from "@material-ui/core/Backdrop";
 import Fade from "@material-ui/core/Fade";
-import { Box, Grid, TextField, Typography } from "@material-ui/core";
+import { Box, Grid, Input, TextField, Typography } from "@material-ui/core";
 import { useStyles } from "./CreateEvent.styles";
+import { DateTimePicker } from "@material-ui/pickers";
+import { mainColors } from "../../assets/Styles";
 
 export default function CreateEventModal({ open, handleClose, event }) {
   const classes = useStyles();
 
+  const [name, setName] = useState("");
+  const [description, setDescription] = useState("");
+  const [location, setLocation] = useState("");
+  const [fee, setFee] = useState("");
+  const [image, setImage] = useState(null);
+  const [categories, setCategories] = useState([]);
+  const [selectedStartDate, handleStartChange] = useState(new Date());
+  const [selectedEndDate, handleEndChange] = useState(new Date());
 
   return (
     <div>
@@ -22,46 +32,82 @@ export default function CreateEventModal({ open, handleClose, event }) {
         }}
       >
         <Fade in={open}>
-          <Grid container direction='column' alignItems='center' className={classes.container}>
-
-            <Typography variant='h5' className={classes.title} gutterBottom >Create event</Typography>
+          <Grid
+            container
+            direction="column"
+            alignItems="center"
+            className={classes.container}
+          >
+            <Typography variant="h5" className={classes.title} gutterBottom>
+              Create event
+            </Typography>
             <TextField
-                label="Name"
-                variant="outlined"
-                color="secondary"
-
-                className={classes.inputBase}
-                />
-             <TextField
-                label="Description"
-                variant="outlined"
-                color="secondary"
-                className={classes.inputBase}
+              label="Name"
+              variant="outlined"
+              color="primary"
+              className={classes.inputBase}
             />
-             <TextField
-                label="Location"
-                variant="outlined"
-                color="secondary"
-                className={classes.inputBase}
+            <TextField
+              label="Description"
+              variant="outlined"
+              color="primary"
+              className={classes.inputBase}
+            />
+            <TextField
+              label="Location"
+              variant="outlined"
+              color="primary"
+              className={classes.inputBase}
+            />
+            <Grid
+              item
+              container
+              justify="space-between"
+              className={classes.inputBase}
+            >
+              <Grid item>
+                <DateTimePicker
+                  label="Start Time"
+                  disablePast
+                  inputVariant="outlined"
+                  value={selectedStartDate}
+                  onChange={handleStartChange}
                 />
-                <Grid item container justify='space-between' className={classes.inputBase}>
-                    <Grid item >
-                    <TextField
-                label="Location"
-                variant="outlined"
-                color="secondary"
-                style={{width:'100%'}}
+              </Grid>
+              <Grid item>
+                <DateTimePicker
+                  label="End Time"
+                  inputVariant="outlined"
+                  disablePast
+                  minDate={selectedStartDate}
+                  minDateMessage="End date cannot be before start date"
+                  style={{ color: mainColors.BACKGROUND_COLOR }}
+                  value={selectedEndDate}
+                  onChange={handleEndChange}
                 />
-                    </Grid>
-                    <Grid item  >
-                    <TextField
-                label="Location"
-                variant="outlined"
-                color="secondary"
-                style={{width:'100%'}}
+              </Grid>
+            </Grid>
+
+            <Grid
+              item
+              container
+              justify="space-between"
+              className={classes.inputBase}
+            >
+              <Grid item>
+                <TextField
+                  label="Fee"
+                  variant="outlined"
+                  color="primary"
+                  className={classes.inputBase}
                 />
-                    </Grid>
-                </Grid>
+              </Grid>
+              <Grid item>
+                <input
+                  type='file'
+                />
+              </Grid>
+            </Grid>
           </Grid>
         </Fade>
       </Modal>
