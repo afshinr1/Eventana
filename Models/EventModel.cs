@@ -8,6 +8,9 @@ namespace Eventana.Models
     {
         [Key]
         public string UUID { get; set; }
+        [MaxLength(30)]
+        public string Name { get; set; }
+        [MaxLength(200)]
         public string Description { get; set; }
 
         [DataType(DataType.DateTime)]
@@ -17,6 +20,8 @@ namespace Eventana.Models
         public DateTime EndTime { get; set; }
         public double Fee { get; set; }
         public int Capacity { get; set; }
+        public string Categories { get; set; }
         public string ImageUrl { get; set; }
+        public string HostedBy { get; set; }
     }
 }

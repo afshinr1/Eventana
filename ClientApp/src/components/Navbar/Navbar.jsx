@@ -58,6 +58,15 @@ export default function Navbar() {
     </Menu>
   );
 
+  const authMenu = !token ? (
+    <>
+      <Button onClick={(e) => history.push("/login")}>Login</Button>
+      <Button onClick={(e) => history.push("/register")}>Register</Button>
+    </>
+  ) : (
+    <Logout />
+  );
+
   const mobileMenuId = "primary-search-account-menu-mobile";
 
   return (
@@ -67,7 +76,7 @@ export default function Navbar() {
           <IconButton
             edge="start"
             className={classes.menuButton}
-            onClick={e => history.push('/')}
+            onClick={(e) => history.push("/")}
             color="inherit"
             aria-label="open drawer"
           >
@@ -100,10 +109,8 @@ export default function Navbar() {
             >
               <AccountCircle />
             </IconButton>
-            <CreateEvent />
-            <Button onClick={(e) => history.push("/login")}>Login</Button>
-            <Button onClick={(e) => history.push("/register")}>Register</Button>
-            {token && <Logout />}
+            {token && <CreateEvent />}
+            {authMenu}
           </div>
           <div className={classes.sectionMobile}>
             <IconButton

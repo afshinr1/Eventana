@@ -1,3 +1,4 @@
+import { Button } from "@material-ui/core";
 import React, { useState } from "react";
 import { useHistory } from "react-router-dom";
 
@@ -28,15 +29,15 @@ function Login() {
     }
     else{
       console.log("Log in failure");
+      setError("Incorrect username/password combination")
     }
   };
-  const handleTest = () => {
-    fetch("/api/authentication/test");
-  };
+
   return (
     <div>
       <h1>Login</h1>
       <form onSubmit={handleSubmit}>
+        <span>{error}</span>
         <label>Username</label>
         <input
           value={username}
@@ -51,9 +52,8 @@ function Login() {
           placeholder="Enter password"
         />
 
-        <input type="submit" />
+        <Button onClick={handleSubmit} variant='contained' color='secondary'>Submit</Button>
       </form>
-      <button onClick={handleTest}>Test</button>
     </div>
   );
 }

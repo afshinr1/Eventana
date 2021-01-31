@@ -1,5 +1,5 @@
 
-export default Categories = [
+export const Categories = [
     "Business",
     "Food and Drinks",
 "Health",

@@ -21,11 +21,11 @@ namespace Eventana.Controllers
     [ApiController]
     public class AuthenticationController : ControllerBase
     {
-        public UserManager<IdentityUser> UserManager { get; }
-        public SignInManager<IdentityUser> SignInManager { get; }
-        public ApplicationDbContext Context { get; }
-        public RoleManager<IdentityRole> RoleManager { get; }
-        public IConfiguration Configuration;
+        private UserManager<IdentityUser> UserManager;
+        private SignInManager<IdentityUser> SignInManager;
+        private ApplicationDbContext Context;
+        private RoleManager<IdentityRole> RoleManager;
+        private IConfiguration Configuration;
 
         public AuthenticationController(UserManager<IdentityUser> userManager, IConfiguration _configuration, SignInManager<IdentityUser> signInManager, RoleManager<IdentityRole> roleManager, ApplicationDbContext _context)
         {
@@ -81,7 +81,7 @@ namespace Eventana.Controllers
 
                 }
             }
-            return BadRequest();
+            return Unauthorized();
         }
 
         [HttpPost("register")]

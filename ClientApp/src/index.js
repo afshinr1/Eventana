@@ -16,10 +16,11 @@ import { Provider } from "react-redux";
 import thunk from "redux-thunk";
 import { AuthenticationReducer } from "./redux/reducers/AuthenticationReducer";
 import { EventsReducer } from "./redux/reducers/EventsReducer";
-
+import {CategoriesReducer} from './redux/reducers/CategoriesReducer';
 const rootReducer = combineReducers({
   AuthenticationReducer: AuthenticationReducer,
   EventsReducer: EventsReducer,
+  CategoriesReducer : CategoriesReducer
 });
 // const composeEnhancer = compose(applyMiddleware(thunk), devToolsEnhancer());
 const store = createStore(rootReducer, applyMiddleware(thunk)); //Redux end

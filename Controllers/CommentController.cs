@@ -11,7 +11,7 @@ namespace Eventana.Controllers
     [Route("/api/comments")]
     public class CommentController : ControllerBase
     {
-        public ApplicationDbContext Context { get; set; }
+        private ApplicationDbContext Context;
         public CommentController(ApplicationDbContext _context)
         {
             Context = _context;

@@ -8,7 +8,7 @@ namespace Eventana.Controllers
     [Route("/api/[Controller]")]
     public class UserController : ControllerBase
     {
-        public ApplicationDbContext context { get; set; }
+        private ApplicationDbContext context;
         public UserController(ApplicationDbContext _context)
         {
             context = _context;

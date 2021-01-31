@@ -33,7 +33,7 @@ namespace Eventana.Controllers
 
         [Authorize]
         [HttpPost("createEvent")]
-        public async Task<IActionResult> Create([FromBody] EventModel newEvent)
+        public async Task<IActionResult> Create([FromForm] EventModel newEvent)
         {
             if (ModelState.IsValid)
             {
@@ -41,6 +41,11 @@ namespace Eventana.Controllers
                 return Ok(newEvent);
             }
             return BadRequest("Information not sufficient");
+        }
+
+        [NonAction]
+        public void DeleteImage(){
+            //Delete imageFunction
         }
 
 
