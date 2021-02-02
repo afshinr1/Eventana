@@ -16,7 +16,7 @@ export const useStyles = makeStyles((theme) => ({
     border: "2px solid #000",
     boxShadow: theme.shadows[5],
   },
- 
+
   title: {
     margin: "0.5rem",
     textTransform: "capitalize",

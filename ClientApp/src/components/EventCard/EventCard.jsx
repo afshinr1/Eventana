@@ -4,8 +4,8 @@ import CardActionArea from "@material-ui/core/CardActionArea";
 import CardContent from "@material-ui/core/CardContent";
 import CardMedia from "@material-ui/core/CardMedia";
 import Typography from "@material-ui/core/Typography";
-import {useStyles } from './EventCard.styles';
-import EventCardModal from '../EventCardModal/EventCardModal';
+import { useStyles } from "./EventCard.styles";
+import EventCardModal from "../EventCardModal/EventCardModal";
 
 export default function EventCard({ event }) {
   const classes = useStyles();
@@ -18,7 +18,6 @@ export default function EventCard({ event }) {
   const handleClose = () => {
     setOpen(false);
   };
-
 
   return (
     <Card className={classes.root}>

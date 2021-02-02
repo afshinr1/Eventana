@@ -13,18 +13,24 @@ function CreateEvent() {
     setOpen(false);
   };
 
-  const createEvent = async (e) => {
+  const createEvent = async (event) => {
+    console.log(event);
     const response = await fetch("/api/events/createEvent", {
-      authorization: sessionStorage.getItem("token"),
-      Accept: "application/json",
-      "Content-Type": "application/json",
       method: "POST",
+      body: JSON.stringify(event),
+      headers: {
+        Authorization: "Bearer " + sessionStorage.getItem("token"),
+        "content-type": "application/json",
+        "accept": "application/json",
+      },
     });
     if (response.ok) {
-      alert("Authorized, get events");
-      console.log(await response.json());
+      //Show success Message
+      let data = await response.json();
+      console.log(data);
+      handleClose();
     } else {
-      alert("Unauthorized");
+      //Show failure message
       console.log(await response.json());
     }
   };
@@ -33,7 +39,11 @@ function CreateEvent() {
       <Button onClick={handleOpen} color="primary">
         Create
       </Button>
-      <CreateEventModal open={open} createEvent={createEvent} handleClose={handleClose} />
+      <CreateEventModal
+        open={open}
+        createEvent={createEvent}
+        handleClose={handleClose}
+      />
     </>
   );
 }

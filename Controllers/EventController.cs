@@ -1,8 +1,10 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Eventana.Data;
 using Eventana.Models;
+using Eventana.Models.DTO;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -33,11 +35,13 @@ namespace Eventana.Controllers
 
         [Authorize]
         [HttpPost("createEvent")]
-        public async Task<IActionResult> Create([FromForm] EventModel newEvent)
+        public async Task<IActionResult> Create([FromBody] EventModel newEvent)
         {
+
             if (ModelState.IsValid)
             {
-                await context.AddAsync(newEvent);
+                 await context.AddAsync(newEvent);
+                 await context.SaveChangesAsync();
                 return Ok(newEvent);
             }
             return BadRequest("Information not sufficient");

@@ -21,6 +21,7 @@ import CheckBoxIcon from "@material-ui/icons/CheckBox";
 import { DateTimePicker } from "@material-ui/pickers";
 import Autocomplete from "@material-ui/lab/Autocomplete";
 import { useSelector } from "react-redux";
+import { v4 as uuidv4 } from "uuid";
 
 const icon = <CheckBoxOutlineBlankIcon fontSize="small" />;
 const checkedIcon = <CheckBoxIcon fontSize="small" />;
@@ -48,7 +49,7 @@ export default function CreateEventModal({ open, handleClose, createEvent }) {
     setName("");
     setDescription("");
     setLocation("");
-    setFee("");
+    setFee(0);
     setImage(null);
     setCategories([]);
     handleClose();
@@ -79,9 +80,22 @@ export default function CreateEventModal({ open, handleClose, createEvent }) {
     if (res.ok) {
       let data = await res.json();
       console.log(data);
-      let imageUrl = data.ImageUrl;
+      let imageUrl = data.imageUrl;
+      let categoriesStr = selectedCategories.toString();
       //TODO
-      createEvent();
+      createEvent({
+        name,
+        description,
+        location,
+        type,
+        startTime: selectedStartDate.toJSON(),
+        endTime: selectedEndDate.toJSON(),
+        fee: parseInt(fee),
+        capacity: parseInt(capacity),
+        categories: categoriesStr,
+        imageUrl,
+        hostedBy: "jaja",
+      });
     } else {
       console.log("error uploading image in create event");
     }

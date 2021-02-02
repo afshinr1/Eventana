@@ -7,11 +7,13 @@ namespace Eventana.Models
     public class EventModel
     {
         [Key]
-        public string UUID { get; set; }
+        public int Id { get; set; }
         [MaxLength(30)]
         public string Name { get; set; }
         [MaxLength(200)]
         public string Description { get; set; }
+        public string Location { get; set; }
+        public string Type { get; set; }
 
         [DataType(DataType.DateTime)]
         public DateTime StartTime { get; set; }

@@ -2,22 +2,17 @@
 
 namespace ASPReactApp.Migrations
 {
-    public partial class UpdateEvents : Migration
+    public partial class locationtype : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.AddColumn<string>(
-                name: "Categories",
+                name: "Location",
                 table: "Events",
                 nullable: true);
 
             migrationBuilder.AddColumn<string>(
-                name: "HostedBy",
-                table: "Events",
-                nullable: true);
-
-            migrationBuilder.AddColumn<string>(
-                name: "Name",
+                name: "Type",
                 table: "Events",
                 nullable: true);
         }
@@ -25,15 +20,11 @@ namespace ASPReactApp.Migrations
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropColumn(
-                name: "Categories",
+                name: "Location",
                 table: "Events");
 
             migrationBuilder.DropColumn(
-                name: "HostedBy",
-                table: "Events");
-
-            migrationBuilder.DropColumn(
-                name: "Name",
+                name: "Type",
                 table: "Events");
         }
     }
