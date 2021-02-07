@@ -1,5 +1,5 @@
 import React from "react";
-import { Route } from "react-router";
+import { Route, Switch } from "react-router-dom";
 import Login from "./components/Login/Login";
 import Register from "./components/Register/Register";
 import NotFound from "./components/NotFound";
@@ -23,10 +23,12 @@ function App() {
   return (
     <Paper className={classes.root}>
       <Navbar />
-      <Route exact path="/" component={Home} />
-      <Route exact path="/login" component={Login} />
-      <Route exact path="/register" component={Register} />
-      <Route exact path="/NotFound" component={NotFound} />
+      <Switch>
+        <Route exact path="/" component={Home} />
+        <Route exact path="/login" component={Login} />
+        <Route exact path="/register" component={Register} />
+        <Route component={NotFound} />
+      </Switch>
     </Paper>
   );
 }

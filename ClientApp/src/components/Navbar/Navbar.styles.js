@@ -7,6 +7,7 @@ export const useStyles = makeStyles((theme) => ({
     },
     navbar: {
         backgroundColor: mainColors.BACKGROUND_COLOR,
+        boxShadow: 'none',
     },
     menuButton: {
       marginRight: theme.spacing(2),

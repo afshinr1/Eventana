@@ -3,7 +3,7 @@ import Modal from "@material-ui/core/Modal";
 import Backdrop from "@material-ui/core/Backdrop";
 import Fade from "@material-ui/core/Fade";
 import { AppBar, Box, Grid, Tab, Tabs, Typography } from "@material-ui/core";
-import { useStyles } from "./EventCardActions";
+import { useStyles } from "./EventCardModal.styles";
 
 export default function EventCardModal({ open, handleClose, event }) {
   const [value, setValue] = React.useState(0);
@@ -27,10 +27,10 @@ export default function EventCardModal({ open, handleClose, event }) {
       >
         <Fade in={open}>
           <Grid container direction="column" className={classes.container}>
-            <img src="" alt="image" className={classes.eventImage} />
+            <img src={event.imageeUrl} alt="image" className={classes.eventImage} />
             <Box component="div" className={classes.content}>
               <Typography align="center" className={classes.title} variant="h5">
-                This is a brief
+                {event.name}
               </Typography>
               <AppBar position="static">
                 <Tabs

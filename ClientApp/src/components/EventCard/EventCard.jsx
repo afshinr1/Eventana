@@ -6,6 +6,7 @@ import CardMedia from "@material-ui/core/CardMedia";
 import Typography from "@material-ui/core/Typography";
 import { useStyles } from "./EventCard.styles";
 import EventCardModal from "../EventCardModal/EventCardModal";
+import { Button, CardActions } from "@material-ui/core";
 
 export default function EventCard({ event }) {
   const classes = useStyles();
@@ -24,20 +25,30 @@ export default function EventCard({ event }) {
       <CardActionArea onClick={handleOpen} className={classes.area}>
         <CardMedia
           className={classes.media}
-          image="/static/images/cards/contemplative-reptile.jpg"
+          image={event.imageUrl}
           title="Contemplative Reptile"
           alt="image jaja"
         />
         <CardContent>
+          <Typography variant="caption">
+            {new Date(event.startTime).toUTCString()} - ${event.fee}
+          </Typography>
           <Typography gutterBottom variant="h5" component="h2">
-            Lizard
+            {event.name}
           </Typography>
           <Typography variant="body2" color="textSecondary" component="p">
-            Lizards are a widespread group of squamate reptiles, with over 6,000
-            species, ranging across all continents except Antarctica
+            {event.description}
           </Typography>
         </CardContent>
       </CardActionArea>
+      <CardActions>
+        <Button size="small" color="primary">
+          Share
+        </Button>
+        <Button size="small" color="primary">
+          Learn More
+        </Button>
+      </CardActions>
       <EventCardModal event={event} handleClose={handleClose} open={open} />
     </Card>
   );

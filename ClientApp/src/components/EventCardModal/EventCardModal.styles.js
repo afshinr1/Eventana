@@ -18,7 +18,7 @@ export const useStyles = makeStyles((theme) => ({
   },
   eventImage: {
     height: "30%",
-    objectFit: "cover",
+    objectFit: "contain",
     border: "1px solid black",
   },
   title: {
