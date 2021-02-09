@@ -4,6 +4,9 @@ import Backdrop from "@material-ui/core/Backdrop";
 import Fade from "@material-ui/core/Fade";
 import { AppBar, Box, Grid, Tab, Tabs, Typography } from "@material-ui/core";
 import { useStyles } from "./EventCardModal.styles";
+import Details from "../Details/Details";
+import Guests from "../Guests/Guests";
+import Feed from "../Feed/Feed";
 
 export default function EventCardModal({ open, handleClose, event }) {
   const [value, setValue] = React.useState(0);
@@ -27,7 +30,11 @@ export default function EventCardModal({ open, handleClose, event }) {
       >
         <Fade in={open}>
           <Grid container direction="column" className={classes.container}>
-            <img src={event.imageeUrl} alt="image" className={classes.eventImage} />
+            <img
+              src={event.imageeUrl}
+              alt="image"
+              className={classes.eventImage}
+            />
             <Box component="div" className={classes.content}>
               <Typography align="center" className={classes.title} variant="h5">
                 {event.name}
@@ -40,11 +47,14 @@ export default function EventCardModal({ open, handleClose, event }) {
                   variant="fullWidth"
                   className={classes.tabs}
                 >
-                  <Tab label="Details"/>
-                  <Tab label="Guests" />
-                  <Tab label="Feed" />
+                  <Tab className={classes.tab} label="Details" />
+                  <Tab className={classes.tab} label="Guests" />
+                  <Tab className={classes.tab} label="Feed" />
                 </Tabs>
               </AppBar>
+              {value === 0 && <Details event={event} />}
+              {value === 1 && <Guests event={event} />}
+              {value === 2 && <Feed event={event} />}
             </Box>
           </Grid>
         </Fade>

@@ -27,5 +27,6 @@ export const useStyles = makeStyles((theme) => ({
 
   tabs: {
       backgroundColor: "#000303",
-  }
+  },
+
 }));

@@ -22,7 +22,7 @@ namespace Eventana.Controllers
         }
         [HttpGet]
         public async Task<IActionResult> Get()
-        {
+        { 
             var check = await context.Events.AnyAsync();
 
             if (check == false)
