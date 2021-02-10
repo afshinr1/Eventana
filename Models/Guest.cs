@@ -12,5 +12,6 @@ namespace Eventana.Models
         [Required]
         public string Username { get; set; }
         public string UserImageUrl { get; set; }
+        public string Type { get; set; }
     }
 }
