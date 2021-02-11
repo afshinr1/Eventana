@@ -5,6 +5,7 @@ using Eventana.Data;
 using Microsoft.AspNetCore.Mvc;
 using Eventana.Models.DTO;
 using Eventana.Models;
+using Microsoft.AspNetCore.Authorization;
 
 namespace Eventana.Controllers
 {
@@ -18,6 +19,18 @@ namespace Eventana.Controllers
             this.context = _context;
         }
 
+        [HttpGet("{id}")]
+        public async Task<IActionResult> GetGuest([FromRoute] int id, [FromQuery] string username)
+        {
+            var guest = context.Guests.FirstOrDefault(x => x.EventId == id && x.Username == username);
+            if (guest != null)
+            {
+                return Ok(guest);
+            }
+            return NotFound();
+        }
+
+        [Authorize]
         [HttpPost("add/{id}")]
         public async Task<IActionResult> PostGuest([FromRoute] int id, [FromBody] GuestDTO newGuest)
         {
@@ -31,7 +44,8 @@ namespace Eventana.Controllers
                     await context.SaveChangesAsync();
                 }
                 //IF EXISTS, UPDATE
-                else{
+                else
+                {
                     Guest target = context.Guests.Single(x => x.EventId == id && x.Username.Equals(newGuest.Username));
                     target.Type = newGuest.Type;
                     await context.SaveChangesAsync();
@@ -39,6 +53,21 @@ namespace Eventana.Controllers
                 return Ok(obj);
             }
             return BadRequest();
+        }
+
+        [HttpDelete("delete/{id}")]
+        public async Task<IActionResult> RemoveGuest([FromRoute] int id, [FromBody] string username)
+        {
+            var guest = context.Guests.FirstOrDefault(x => x.Username == username && x.EventId == id);
+
+            if (guest != null)
+            {
+                context.Guests.Remove(guest);
+                await context.SaveChangesAsync();
+                return Ok(guest);
+            }
+
+            return NotFound();
         }
     }
 }
