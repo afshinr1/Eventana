@@ -29,9 +29,9 @@ export default function EventCardModal({ open, handleClose, event }) {
         }}
       >
         <Fade in={open}>
-          <Grid container direction="column" className={classes.container}>
+          <Box className={classes.container}>
             <img
-              src={event.imageeUrl}
+              src={event.imageUrl}
               alt="image"
               className={classes.eventImage}
             />
@@ -56,7 +56,7 @@ export default function EventCardModal({ open, handleClose, event }) {
               {value === 1 && <Guests event={event} />}
               {value === 2 && <Feed event={event} />}
             </Box>
-          </Grid>
+          </Box>
         </Fade>
       </Modal>
     </div>

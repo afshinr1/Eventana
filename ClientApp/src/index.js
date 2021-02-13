@@ -8,6 +8,7 @@ import { theme } from "./assets/Styles";
 import registerServiceWorker from "./registerServiceWorker";
 import { MuiPickersUtilsProvider } from "@material-ui/pickers";
 import DateFnsUtils from '@date-io/date-fns';
+import "./index.css";
 
 
 //Redux start

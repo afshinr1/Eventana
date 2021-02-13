@@ -18,6 +18,11 @@ namespace Eventana.Controllers
         {
             this.context = _context;
         }
+        public async Task<IActionResult> GetGuests([FromQuery] int id)
+        {
+            var guestList = context.Guests.Where(x => x.EventId == id).ToList();
+            return Ok(guestList);
+        }
 
         [HttpGet("{id}")]
         public async Task<IActionResult> GetGuest([FromRoute] int id, [FromQuery] string username)

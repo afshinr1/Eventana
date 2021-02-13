@@ -8,6 +8,8 @@ export const useStyles = makeStyles((theme) => ({
     justifyContent: "center",
   },
   container: {
+    display: "flex",
+    flexDirection : "column",
     boxSizing: "border-box",
     height: "95vh",
     width: "38rem",
@@ -15,12 +17,15 @@ export const useStyles = makeStyles((theme) => ({
     color: "#FEFEFE",
     border: "2px solid #000",
     boxShadow: theme.shadows[5],
+    overflow :'auto',
+
   },
   eventImage: {
-    height: "30%",
-    objectFit: "contain",
+    maxHeight: "30vh",
+    minHeight : "30vh",
     border: "1px solid black",
   },
+
   title: {
     margin: "0.5rem",
   },

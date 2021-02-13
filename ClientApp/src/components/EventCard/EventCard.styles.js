@@ -10,6 +10,7 @@ export const useStyles = makeStyles((theme) => ({
       media: {
         height: 200,
       },
+    
       // area: {
       //   height: "90%",
       // },

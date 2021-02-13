@@ -46,7 +46,7 @@ export default function EventCard({ event }) {
           Share
         </Button>
         <Button size="small" color="primary">
-          Learn More
+          Map
         </Button>
       </CardActions>
       <EventCardModal event={event} handleClose={handleClose} open={open} />
