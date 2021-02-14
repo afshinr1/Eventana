@@ -1,5 +1,5 @@
-const initialState = {token : null}
+const initialState = { token: null };
 
 export const AuthenticationReducer = (state = initialState, action) => {
-    return state;
-}
+  return state;
+};

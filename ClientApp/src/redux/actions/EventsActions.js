@@ -13,5 +13,5 @@ export const getAllEvents = () => {
  };
 
  const createEvent = (event) => {
-    
+
  }

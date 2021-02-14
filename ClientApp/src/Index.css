@@ -1,17 +1,10 @@
-* {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-}
-
 ::-webkit-scrollbar {
-  width: 6px;
-  border-radius: 50%;
+  width: 8px;
 }
 
 /* Track */
 ::-webkit-scrollbar-track {
-  background: #000305;
+  background: #000;
 }
 
 /* Handle */

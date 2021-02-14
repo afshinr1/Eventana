@@ -21,14 +21,12 @@ function Login() {
     if(response.ok){
       response.json()
         .then(data =>{
-          console.log(data);
           sessionStorage.setItem("user", JSON.stringify(data.user));
           sessionStorage.setItem("token", data.token);
           history.push("/");
         });
     }
     else{
-      console.log("Log in failure");
       setError("Incorrect username/password combination")
     }
   };

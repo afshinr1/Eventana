@@ -9,7 +9,6 @@ function Details({ event }) {
   const categoryList = event.categories
     .split(",")
     .map((category,index) => <Chip key={index} className={classes.chip} disabled label={category} />);
-  console.log(categoryList);
 
   const getAttendingData = async () => {
     if (user) {
@@ -33,7 +32,6 @@ function Details({ event }) {
   };
 
   const handleAttendance = (type) => {
-    console.log(event);
     const { id } = event;
     const obj = {
       username: user.userName,

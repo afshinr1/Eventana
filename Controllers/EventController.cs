@@ -22,7 +22,7 @@ namespace Eventana.Controllers
         }
         [HttpGet]
         public async Task<IActionResult> Get()
-        { 
+        {
             var check = await context.Events.AnyAsync();
 
             if (check == false)
@@ -44,7 +44,7 @@ namespace Eventana.Controllers
                  await context.SaveChangesAsync();
                 return Ok(newEvent);
             }
-            return BadRequest("Information not sufficient");
+            throw new ArgumentException("Model state not valid");
         }
 
         [NonAction]

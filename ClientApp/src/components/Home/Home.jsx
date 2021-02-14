@@ -8,7 +8,6 @@ function Home() {
   const dispatch = useDispatch();
   const events = useSelector((state) => state.EventsReducer.events);
   const classes = useStyles();
-  console.log(events);
 
   const eventCards = events?.map((event) => (
     <Grid key={event.id} item className={classes.innerContainer} xs={12} sm={6} md={4} lg={3}>

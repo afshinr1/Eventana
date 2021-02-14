@@ -37,9 +37,12 @@ namespace Eventana.Controllers
 
         [Authorize]
         [HttpPost("add/{id}")]
-        public async Task<IActionResult> PostGuest([FromRoute] int id, [FromBody] GuestDTO newGuest)
+        public async Task<IActionResult> AddGuest([FromRoute] int? id, [FromBody] GuestDTO newGuest)
         {
-            Guest obj = new Guest() { EventId = id, Type = newGuest.Type, Username = newGuest.Username, UserImageUrl = newGuest.UserImageUrl };
+            if(id == null){
+                return NotFound();
+            }
+            Guest obj = new Guest() { EventId = (int)id, Type = newGuest.Type, Username = newGuest.Username, UserImageUrl = newGuest.UserImageUrl };
             if (ModelState.IsValid)
             {
                 var check = context.Guests.Any(x => x.EventId == id && x.Username.Equals(newGuest.Username));
@@ -51,7 +54,7 @@ namespace Eventana.Controllers
                 //IF EXISTS, UPDATE
                 else
                 {
-                    Guest target = context.Guests.Single(x => x.EventId == id && x.Username.Equals(newGuest.Username));
+                    Guest target = context.Guests.SingleOrDefault(x => x.EventId == id && x.Username.Equals(newGuest.Username));
                     target.Type = newGuest.Type;
                     await context.SaveChangesAsync();
                 }

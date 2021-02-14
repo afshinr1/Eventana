@@ -2,11 +2,20 @@ import React from "react";
 import Modal from "@material-ui/core/Modal";
 import Backdrop from "@material-ui/core/Backdrop";
 import Fade from "@material-ui/core/Fade";
-import { AppBar, Box, Grid, Tab, Tabs, Typography } from "@material-ui/core";
+import {
+  AppBar,
+  Box,
+  Grid,
+  IconButton,
+  Tab,
+  Tabs,
+  Typography,
+} from "@material-ui/core";
 import { useStyles } from "./EventCardModal.styles";
 import Details from "../Details/Details";
 import Guests from "../Guests/Guests";
 import Feed from "../Feed/Feed";
+import CloseIcon from "@material-ui/icons/Close";
 
 export default function EventCardModal({ open, handleClose, event }) {
   const [value, setValue] = React.useState(0);
@@ -21,7 +30,6 @@ export default function EventCardModal({ open, handleClose, event }) {
       <Modal
         className={classes.modal}
         open={open}
-        onClose={handleClose}
         closeAfterTransition
         BackdropComponent={Backdrop}
         BackdropProps={{
@@ -30,6 +38,9 @@ export default function EventCardModal({ open, handleClose, event }) {
       >
         <Fade in={open}>
           <Box className={classes.container}>
+            <IconButton onClick={handleClose} className={classes.iconBtn}>
+              <CloseIcon />
+            </IconButton>
             <img
               src={event.imageUrl}
               alt="image"

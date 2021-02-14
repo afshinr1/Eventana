@@ -7,6 +7,17 @@ export const useStyles = makeStyles((theme) => ({
     alignItems: "center",
     justifyContent: "center",
   },
+  iconBtn: {
+    position: "absolute",
+    top: "5px",
+    right: "5px",
+    backgroundColor: "#1E1E2F",
+    height: "1rem",
+    width: "1rem",
+    "&:hover": {
+      backgroundColor: "#1E1E2F",
+    },
+  },
   container: {
     boxSizing: "border-box",
     height: "95vh",
@@ -15,6 +26,8 @@ export const useStyles = makeStyles((theme) => ({
     color: "#FEFEFE",
     border: "2px solid #000",
     boxShadow: theme.shadows[5],
+    position: 'relative'
+
   },
 
   title: {

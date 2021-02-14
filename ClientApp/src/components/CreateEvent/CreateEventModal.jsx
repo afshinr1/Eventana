@@ -6,6 +6,7 @@ import {
   Button,
   FormControl,
   Grid,
+  IconButton,
   InputAdornment,
   InputLabel,
   MenuItem,
@@ -21,7 +22,7 @@ import CheckBoxIcon from "@material-ui/icons/CheckBox";
 import { DateTimePicker } from "@material-ui/pickers";
 import Autocomplete from "@material-ui/lab/Autocomplete";
 import { useSelector } from "react-redux";
-import { v4 as uuidv4 } from "uuid";
+import CloseIcon from "@material-ui/icons/Close";
 
 const icon = <CheckBoxOutlineBlankIcon fontSize="small" />;
 const checkedIcon = <CheckBoxIcon fontSize="small" />;
@@ -79,7 +80,6 @@ export default function CreateEventModal({ open, handleClose, createEvent }) {
 
     if (res.ok) {
       let data = await res.json();
-      console.log(data);
       let imageUrl = data.imageUrl;
       let categoriesStr = selectedCategories.toString();
       //TODO
@@ -106,7 +106,6 @@ export default function CreateEventModal({ open, handleClose, createEvent }) {
       <Modal
         className={classes.modal}
         open={open}
-        onClose={handleCleanup}
         closeAfterTransition
         BackdropComponent={Backdrop}
         BackdropProps={{
@@ -120,6 +119,9 @@ export default function CreateEventModal({ open, handleClose, createEvent }) {
             alignItems="center"
             className={classes.container}
           >
+            <IconButton onClick={handleCleanup} className={classes.iconBtn}>
+              <CloseIcon />
+            </IconButton>
             <Typography variant="h5" className={classes.title} gutterBottom>
               Create event
             </Typography>

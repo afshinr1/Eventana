@@ -7,6 +7,9 @@ import { makeStyles, Paper } from "@material-ui/core";
 import { mainColors } from "./assets/Styles";
 import Navbar from "./components/Navbar/Navbar";
 import Home from "./components/Home/Home.jsx";
+import "react-toastify/dist/ReactToastify.css";
+import { ToastContainer } from "react-toastify";
+import { CssBaseline } from "@material-ui/core";
 
 const useStyles = makeStyles({
   root: {
@@ -29,6 +32,8 @@ function App() {
         <Route exact path="/register" component={Register} />
         <Route component={NotFound} />
       </Switch>
+      <ToastContainer />
+      <CssBaseline />
     </Paper>
   );
 }

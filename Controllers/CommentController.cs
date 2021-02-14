@@ -1,6 +1,10 @@
+using System;
 using System.Linq;
 using System.Threading.Tasks;
 using Eventana.Data;
+using Eventana.Models;
+using Eventana.Models.DTO;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
@@ -18,23 +22,30 @@ namespace Eventana.Controllers
         }
 
 
-        [HttpGet("{uuid}")]
-        public async Task<IActionResult> GetComments(string uuid)
+        [HttpGet("{id}")]
+        public async Task<IActionResult> GetComments([FromRoute] int id)
         {
-            if (!string.IsNullOrEmpty(uuid))
+
+            var comments = await Context.Comments.Where(comment => comment.EventId == id).OrderByDescending(x => x.CreatedAt).ToListAsync();
+            return Ok(comments);
+
+        }
+
+        [HttpPost("create")]
+        public async Task<IActionResult> Create(CommentDTO newComment)
+        {
+
+            if (ModelState.IsValid)
             {
-                var comments = await Context.Comments.Where(comment => comment.EventId.Equals(uuid)).ToListAsync();
-                if (comments.Any())
-                {
-                    return Ok(comments);
-                }
-                else
-                {
-                    return Ok(new { Response = " There are no comments for this event" });
-                }
+                Comment obj = new Comment() { Description = newComment.Description, CreatedAt = DateTime.Now, EventId = newComment.EventId, Username = newComment.Username, Type = newComment.Type };
+                var newObj = await Context.AddAsync(obj);
+                await Context.SaveChangesAsync();
+
+                return Ok(obj);
 
             }
             return BadRequest();
         }
     }
 }
+
