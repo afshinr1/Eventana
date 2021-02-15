@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 using Eventana.Models.DTO;
 using Eventana.Models;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.EntityFrameworkCore;
 
 namespace Eventana.Controllers
 {
@@ -20,7 +21,7 @@ namespace Eventana.Controllers
         }
         public async Task<IActionResult> GetGuests([FromQuery] int id)
         {
-            var guestList = context.Guests.Where(x => x.EventId == id).ToList();
+            var guestList = context.Guests.Where(x => x.EventId == id).Include(c => c.Event).ToList();
             return Ok(guestList);
         }
 

@@ -16,5 +16,6 @@ namespace Eventana.Data
         public DbSet<Comment> Comments { get; set; }
         public DbSet<Guest> Guests { get; set; }
         public DbSet<Notification> Notifications { get; set; }
+        public DbSet<Test> Tests { get; set; }
     }
 }

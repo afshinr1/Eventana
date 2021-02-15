@@ -1,4 +1,5 @@
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Eventana.Models
 {
@@ -9,6 +10,8 @@ namespace Eventana.Models
         public int Id { get; set; }
         [Required]
         public int EventId { get; set; }
+        [ForeignKey("EventId")]
+        public EventModel Event { get; set; }
         [Required]
         public string Username { get; set; }
         public string UserImageUrl { get; set; }

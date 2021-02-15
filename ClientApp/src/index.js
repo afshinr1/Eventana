@@ -30,7 +30,7 @@ const rootReducer = combineReducers({
   CommentsReducer: CommentsReducer,
 });
 // const composeEnhancer = compose(applyMiddleware(thunk), devToolsEnhancer());
-const store = createStore(rootReducer, applyMiddleware(thunk)); 
+const store = createStore(rootReducer, applyMiddleware(thunk));
 
 //REDUX END
 
