@@ -4,12 +4,18 @@ import AccordionDetails from "@material-ui/core/AccordionDetails";
 import AccordionSummary from "@material-ui/core/AccordionSummary";
 import Typography from "@material-ui/core/Typography";
 import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
-import { Box } from "@material-ui/core";
+import { Backdrop, Box } from "@material-ui/core";
 import { useStyles } from "./Guests.styles";
+import CircularProgress from '@material-ui/core/CircularProgress';
 
 export default function Guests({ event }) {
   const classes = useStyles();
-  const [expanded, setExpanded] = React.useState(false);
+  const [expanded, setExpanded] = useState(false);
+  const [loading, setLoading] = useState(true);
+  const [attending, setAttending] = useState([]);
+  const [maybe, setMaybe] = useState([]);
+  const [notAttending, setNotAttending] = useState([]);
+  const [invited, setInvited] = useState([]);
 
   const handleChange = (panel) => (event, isExpanded) => {
     setExpanded(isExpanded ? panel : false);
@@ -20,6 +26,20 @@ export default function Guests({ event }) {
     if (response.ok) {
       let data = await response.json();
       console.log(data);
+      setLoading(false);
+      data.forEach(guest => {
+          switch (guest.type) {
+            case "attending":
+              setAttending(prevAttending => [...prevAttending, guest.username])
+              break;
+          case "maybe":
+            setMaybe(prevMaybe => [...prevMaybe, guest.username])
+              break;
+          case "not attending":
+            setNotAttending(prev => [...prev, guest.username])
+              break;
+          }
+      })
     }
   };
 
@@ -29,6 +49,9 @@ export default function Guests({ event }) {
 
   return (
     <Box component="div" className={classes.root}>
+      <Backdrop className={classes.backdrop} open={loading} >
+        <CircularProgress color="inherit" />
+      </Backdrop>
       <Box className={classes.header}>
         <Typography className={classes.title}>Hosted By: Jjaajlmon</Typography>
       </Box>
@@ -42,7 +65,7 @@ export default function Guests({ event }) {
           aria-controls="panel1bh-content"
           id="panel1bh-header"
         >
-          <Typography className={classes.heading}>Attending</Typography>
+          <Typography className={classes.heading}>Attending - {attending.length}</Typography>
         </AccordionSummary>
         <AccordionDetails>
           <Typography>
@@ -61,7 +84,7 @@ export default function Guests({ event }) {
           aria-controls="panel2bh-content"
           id="panel2bh-header"
         >
-          <Typography className={classes.heading}>Maybe</Typography>
+          <Typography className={classes.heading}>Maybe - {maybe.length}</Typography>
         </AccordionSummary>
         <AccordionDetails>
           <Typography>
@@ -81,7 +104,7 @@ export default function Guests({ event }) {
           aria-controls="panel3bh-content"
           id="panel3bh-header"
         >
-          <Typography className={classes.heading}>No</Typography>
+          <Typography className={classes.heading}>No - {notAttending.length}</Typography>
         </AccordionSummary>
         <AccordionDetails>
           <Typography>

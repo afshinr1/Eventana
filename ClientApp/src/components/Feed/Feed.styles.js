@@ -13,7 +13,7 @@ export const useStyles = makeStyles((theme) => ({
     width: "100%",
   },
   inputHeader: {
-    margin: theme.spacing(1),
+    margin: '1rem'
   },
   submitPostText: {
     marginLeft: theme.spacing(2),

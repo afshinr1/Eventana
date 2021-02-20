@@ -46,6 +46,29 @@ namespace Eventana.Controllers
             }
             return BadRequest();
         }
+
+        //TODO
+        [HttpPut("edit/")]
+        public async Task<IActionResult> Edit([FromBody] Comment search)
+        {
+            return Ok();
+        }
+
+        [HttpDelete("delete")]
+        public async Task<IActionResult> Delete([FromBody] Comment search)
+        {
+            var comment = Context.Comments.FirstOrDefault(x => x.Id == search.Id);
+            if (comment != null)
+            {
+                Context.Comments.Remove(comment);
+                await Context.SaveChangesAsync();
+                return Ok();
+            }
+            else
+            {
+                return NotFound();
+            }
+        }
     }
 }
 
