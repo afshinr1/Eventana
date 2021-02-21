@@ -22,6 +22,7 @@ export default function Navbar() {
   const classes = useStyles();
   const [anchorEl, setAnchorEl] = useState(null);
   const [openNotifications, setOpenNotifications] = useState(false);
+  const [search, setSearch] = useState("");
 
   const history = useHistory();
   const isMenuOpen = Boolean(anchorEl);
@@ -106,6 +107,7 @@ export default function Navbar() {
               <SearchIcon />
             </div>
             <InputBase
+            onChange={e => setSearch(e.target.value) }
               placeholder="Search…"
               classes={{
                 root: classes.inputRoot,
