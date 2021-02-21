@@ -14,7 +14,11 @@ export const CommentsReducer = (state = initialState, action) => {
         ...state,
         comments: [action.payload, ...state.comments],
       };
-
+    case "REMOVE_COMMENT":
+      return {
+        ...state,
+        comments: state.comments.filter(x => x.id !== action.payload)
+      }
     default:
       return state;
   }

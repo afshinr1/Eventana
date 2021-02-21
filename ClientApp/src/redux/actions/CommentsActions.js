@@ -1,3 +1,5 @@
+import { toast } from "react-toastify";
+
 export const getAllComments = (id) => {
   return async (dispatch) => {
     const res = await fetch(`/api/comments/${id}`);
@@ -29,3 +31,21 @@ export const addComment = (commentDTO) => {
     }
   };
 };
+
+export const deleteComment = (comment) => {
+  console.log('in delete comment')
+  return async (dispatch) => {
+    let res = await fetch(`api/comments/delete/${comment.id}`, {
+      method: "delete",
+      body: JSON.stringify(comment),
+      headers: {
+        Authorization: "Bearer " + sessionStorage.getItem("token"),
+        "content-type": "application/json",
+        accept: "application/json",
+      },
+    });
+    if (res.ok){
+      dispatch({ type: "REMOVE_COMMENT", payload: comment.id})
+    }
+  }
+}

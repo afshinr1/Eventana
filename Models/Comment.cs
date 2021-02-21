@@ -13,9 +13,6 @@ namespace Eventana.Models
         public string Description { get; set; }
 
         public int EventId { get; set; }
-        [ForeignKey("EventId")]
-        public EventModel Event {get; set;}
-
         public string Username { get; set; }
         public string Type { get; set; }
         public DateTime? CreatedAt { get; set; }

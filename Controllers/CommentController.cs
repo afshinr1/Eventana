@@ -48,15 +48,26 @@ namespace Eventana.Controllers
         }
 
         //TODO
-        [HttpPut("edit/")]
-        public async Task<IActionResult> Edit([FromBody] Comment search)
+        [HttpPut("edit/{id}")]
+        public async Task<IActionResult> Edit([FromBody] Comment comment, [FromRoute] int id)
         {
-            return Ok();
+            if (ModelState.IsValid)
+            {
+                Context.Comments.Update(comment);
+                await Context.SaveChangesAsync();
+                return Ok(comment);
+            }
+            else
+            {
+                return BadRequest();
+            }
         }
 
-        [HttpDelete("delete")]
-        public async Task<IActionResult> Delete([FromBody] Comment search)
+        [Authorize]
+        [HttpDelete("delete/{id}")]
+        public async Task<IActionResult> Delete([FromBody] Comment search, [FromRoute] int id)
         {
+
             var comment = Context.Comments.FirstOrDefault(x => x.Id == search.Id);
             if (comment != null)
             {

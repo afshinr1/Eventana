@@ -8,6 +8,7 @@ function Comments() {
     const classes = useStyles();
     const allComments = useSelector(state => state.CommentsReducer.comments);
     console.log(allComments);
+    
     const comments = allComments.map(comment => <Comment key={comment.id} comment={comment} />);
     return (
         <Box variant='div' className='JJajaj'>

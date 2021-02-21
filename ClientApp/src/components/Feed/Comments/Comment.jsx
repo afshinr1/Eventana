@@ -1,10 +1,44 @@
-import { Avatar, Grid, IconButton, Typography } from "@material-ui/core";
+import {
+  Avatar,
+  Grid,
+  IconButton,
+  ListItemIcon,
+  ListItemText,
+  Menu,
+  MenuItem,
+  Typography,
+} from "@material-ui/core";
 import React from "react";
 import { useStyles } from "./Comments.styles";
 import MoreVertIcon from "@material-ui/icons/MoreVert";
+import DraftsIcon from "@material-ui/icons/Drafts";
+import DeleteIcon from "@material-ui/icons/Delete";
+import { toast } from "react-toastify";
+import { deleteComment } from "../../../redux/actions/CommentsActions";
+import { useDispatch } from "react-redux";
+
 function Comment({ comment }) {
   const classes = useStyles();
   const username = JSON.parse(sessionStorage.getItem("user"))?.userName;
+  const dispatch = useDispatch();
+  const [anchorEl, setAnchorEl] = React.useState(null);
+
+  const handleClick = (event) => {
+    setAnchorEl(event.currentTarget);
+  };
+
+  const handleClose = () => {
+    setAnchorEl(null);
+  };
+
+  const handleDelete =  () => {
+     dispatch(deleteComment(comment));
+     toast.success("Comment Deleted!");
+     handleClose();
+  };
+
+  const handleEdit = () => {};
+
   return (
     <Grid
       container
@@ -21,10 +55,31 @@ function Comment({ comment }) {
         className={classes.commentHeader}
       >
         {username === comment.username && (
-          <IconButton className={classes.iconBtn}>
+          <IconButton onClick={handleClick} className={classes.iconBtn}>
             <MoreVertIcon />
           </IconButton>
         )}
+        <Menu
+          id="simple-menu"
+          anchorEl={anchorEl}
+          keepMounted
+          open={Boolean(anchorEl)}
+          onClose={handleClose}
+        >
+          <MenuItem onClick={handleClose}>
+            <ListItemIcon>
+              <DraftsIcon fontSize="small" />
+            </ListItemIcon>
+            <ListItemText primary="Edit" />
+          </MenuItem>
+          <MenuItem onClick={handleDelete}>
+            <ListItemIcon>
+              <DeleteIcon fontSize="small" />
+            </ListItemIcon>
+            <ListItemText primary="Delete" />
+          </MenuItem>
+        </Menu>
+
         <Grid item>
           <Avatar src="" alt={comment.username} />
         </Grid>
