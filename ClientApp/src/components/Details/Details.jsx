@@ -1,14 +1,19 @@
 import { Button, Chip, Grid, Typography } from "@material-ui/core";
 import { useStyles } from "./Details.styles";
 import React, { useState, useEffect } from "react";
+import { addNotification } from "../../redux/actions/NotificationActions";
+import { useDispatch } from "react-redux";
 
 function Details({ event }) {
+  const dispatch = useDispatch();
   const classes = useStyles();
   const user = JSON.parse(sessionStorage.getItem("user"));
   const [attendanceType, setAttendanceType] = useState("");
   const categoryList = event.categories
     .split(",")
-    .map((category,index) => <Chip key={index} className={classes.chip} disabled label={category} />);
+    .map((category, index) => (
+      <Chip key={index} className={classes.chip} disabled label={category} />
+    ));
 
   const getAttendingData = async () => {
     if (user) {
@@ -48,6 +53,12 @@ function Details({ event }) {
       },
     });
     setAttendanceType(type);
+
+    const newNotification = {
+      username: user.userName,
+      notificationDescription: `You have RSVPed to ${event.name} with ${type}`,
+    };
+    dispatch(addNotification(newNotification));
   };
 
   return (
@@ -112,7 +123,7 @@ function Details({ event }) {
         </Typography>
         {categoryList}
       </Grid>
-      <Grid item container justify="space-between" direction="row"  xs={12}>
+      <Grid item container justify="space-between" direction="row" xs={12}>
         <Button
           onClick={(e) => handleAttendance("attending")}
           className={classes.btn}

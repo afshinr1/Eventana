@@ -1,8 +1,7 @@
-import React from "react";
+import React, { useState } from "react";
 import MenuIcon from "@material-ui/icons/Menu";
 import SearchIcon from "@material-ui/icons/Search";
 import AccountCircle from "@material-ui/icons/AccountCircle";
-import MoreIcon from "@material-ui/icons/MoreVert";
 import { useStyles } from "./Navbar.styles";
 import {
   Button,
@@ -16,12 +15,14 @@ import {
 } from "@material-ui/core";
 import { useHistory } from "react-router-dom";
 import CreateEvent from "../CreateEvent/CreateEvent";
-import Logout from "../Logout/Logout";
+import { toast } from "react-toastify";
+import Notifications from "../Notifications/Notifications";
 
 export default function Navbar() {
   const classes = useStyles();
-  const [anchorEl, setAnchorEl] = React.useState(null);
-  const [mobileMoreAnchorEl, setMobileMoreAnchorEl] = React.useState(null);
+  const [anchorEl, setAnchorEl] = useState(null);
+  const [openNotifications, setOpenNotifications] = useState(false);
+
   const history = useHistory();
   const isMenuOpen = Boolean(anchorEl);
   const token = sessionStorage.getItem("token");
@@ -29,17 +30,21 @@ export default function Navbar() {
     setAnchorEl(event.currentTarget);
   };
 
-  const handleMobileMenuClose = () => {
-    setMobileMoreAnchorEl(null);
-  };
-
   const handleMenuClose = () => {
     setAnchorEl(null);
-    handleMobileMenuClose();
+  };
+  const handleCloseNotifications = () => {
+    setOpenNotifications(false);
   };
 
-  const handleMobileMenuOpen = (event) => {
-    setMobileMoreAnchorEl(event.currentTarget);
+  const handleLogout = async () => {
+    sessionStorage.clear();
+    const response = await fetch("/api/authentication/logout");
+    if (response.ok) {
+      handleMenuClose();
+      toast.success("Logout successful");
+      history.push("/login");
+    }
   };
 
   const menuId = "primary-search-account-menu";
@@ -54,7 +59,11 @@ export default function Navbar() {
       onClose={handleMenuClose}
     >
       <MenuItem onClick={handleMenuClose}>Profile</MenuItem>
-      <MenuItem onClick={handleMenuClose}>My account</MenuItem>
+      <MenuItem onClick={(e) => setOpenNotifications(true)}>
+        notifications
+      </MenuItem>
+      <MenuItem onClick={handleMenuClose}>manage events</MenuItem>
+      <MenuItem onClick={handleLogout}>logout</MenuItem>
     </Menu>
   );
 
@@ -64,10 +73,17 @@ export default function Navbar() {
       <Button onClick={(e) => history.push("/register")}>Register</Button>
     </>
   ) : (
-    <Logout />
+    <IconButton
+      edge="end"
+      aria-label="account of current user"
+      aria-controls={menuId}
+      aria-haspopup="true"
+      onClick={handleProfileMenuOpen}
+      color="inherit"
+    >
+      <AccountCircle />
+    </IconButton>
   );
-
-  const mobileMenuId = "primary-search-account-menu-mobile";
 
   return (
     <div className={classes.grow}>
@@ -99,33 +115,18 @@ export default function Navbar() {
           </div>
           <div className={classes.grow} />
           <div className={classes.sectionDesktop}>
-            <IconButton
-              edge="end"
-              aria-label="account of current user"
-              aria-controls={menuId}
-              aria-haspopup="true"
-              onClick={handleProfileMenuOpen}
-              color="inherit"
-            >
-              <AccountCircle />
-            </IconButton>
             {token && <CreateEvent />}
             {authMenu}
-          </div>
-          <div className={classes.sectionMobile}>
-            <IconButton
-              aria-label="show more"
-              aria-controls={mobileMenuId}
-              aria-haspopup="true"
-              onClick={handleMobileMenuOpen}
-              color="inherit"
-            >
-              <MoreIcon />
-            </IconButton>
           </div>
         </Toolbar>
       </AppBar>
       {renderMenu}
+      {token && (
+        <Notifications
+          open={openNotifications}
+          handleClose={handleCloseNotifications}
+        />
+      )}
     </div>
   );
 }

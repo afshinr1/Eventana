@@ -9,6 +9,7 @@ import {
 import { useDispatch } from "react-redux";
 import { toast, Flip } from 'react-toastify';
 import Comments from "./Comments/Comments";
+import { addNotification } from "../../redux/actions/NotificationActions";
 
 function Feed({ event }) {
   const user = JSON.parse(sessionStorage.getItem("user"));
@@ -22,7 +23,12 @@ function Feed({ event }) {
         autoClose : 3000,
         position : toast.POSITION.TOP_CENTER,
         transition: Flip,
-    })
+    });
+    const newNotification = {
+      username: user.userName,
+      notificationDescription: `Your message has been posted to the event.`,
+    };
+    dispatch(addNotification(newNotification));
   };
 
   useEffect(() => {

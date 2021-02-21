@@ -1,8 +1,10 @@
+using System;
 using System.Linq;
 using System.Threading.Tasks;
 using Eventana.Data;
 using Eventana.Models;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 
 namespace Eventana.Controllers
 {
@@ -20,7 +22,7 @@ namespace Eventana.Controllers
         [HttpGet]
         public async Task<IActionResult> Get([FromQuery] string username)
         {
-            var notifications = context.Notifications.Where(x => x.Username.Equals(username, System.StringComparison.Ordinal)).ToList();
+            var notifications = await context.Notifications.Where(x => x.Username.Equals(username)).OrderByDescending(x => x.CreatedAt).ToListAsync();
             //Gets all notifications for a user
             return Ok(notifications);
         }
@@ -28,14 +30,33 @@ namespace Eventana.Controllers
         [HttpPost("add")]
         public async Task<IActionResult> Create([FromBody] Notification newNotification)
         {
+            newNotification.CreatedAt = DateTime.Now;
             if (ModelState.IsValid)
             {
-                var obj = context.Notifications.AddAsync(newNotification);
+                var obj = await context.Notifications.AddAsync(newNotification);
                 await context.SaveChangesAsync();
-                return Ok(obj);
+                return Ok(newNotification);
             }
-            return BadRequest("Model state not valid");
+            return Ok("Model state not valid");
         }
 
+        [HttpDelete("delete")]
+        public async Task<IActionResult> Delete([FromBody] Notification notif)
+        {
+
+            if (ModelState.IsValid)
+            {
+                var notification = await context.Notifications.FindAsync(notif.Id);
+
+                if (notification != null)
+                {
+                    context.Notifications.Remove(notification);
+                    await context.SaveChangesAsync();
+                    return Ok(notification);
+                }
+                return NotFound();
+            }
+            return BadRequest();
+        }
     }
 }

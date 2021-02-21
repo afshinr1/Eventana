@@ -33,7 +33,6 @@ export const addComment = (commentDTO) => {
 };
 
 export const deleteComment = (comment) => {
-  console.log('in delete comment')
   return async (dispatch) => {
     let res = await fetch(`api/comments/delete/${comment.id}`, {
       method: "delete",

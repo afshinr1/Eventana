@@ -16,6 +16,7 @@ import DeleteIcon from "@material-ui/icons/Delete";
 import { toast } from "react-toastify";
 import { deleteComment } from "../../../redux/actions/CommentsActions";
 import { useDispatch } from "react-redux";
+import { addNotification } from "../../../redux/actions/NotificationActions";
 
 function Comment({ comment }) {
   const classes = useStyles();
@@ -31,10 +32,16 @@ function Comment({ comment }) {
     setAnchorEl(null);
   };
 
-  const handleDelete =  () => {
-     dispatch(deleteComment(comment));
-     toast.success("Comment Deleted!");
-     handleClose();
+  const handleDelete = () => {
+    dispatch(deleteComment(comment));
+    toast.success("Comment Deleted!");
+    handleClose();
+
+    const newNotification = {
+      username: username,
+      notificationDescription: `Your message has been deleted`,
+    };
+    dispatch(addNotification(newNotification));
   };
 
   const handleEdit = () => {};
