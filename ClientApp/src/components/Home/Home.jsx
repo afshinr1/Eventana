@@ -4,19 +4,31 @@ import { useDispatch, useSelector } from "react-redux";
 import { getAllEvents } from "../../redux/actions/EventsActions";
 import EventCard from "../EventCard/EventCard";
 import { useStyles } from "./Home.styles";
-function Home() {
+
+function Home({ searchTerm }) {
   const dispatch = useDispatch();
   const events = useSelector((state) => state.EventsReducer.events);
   const classes = useStyles();
 
-  const eventCards = events?.map((event) => (
-    <Grid key={event.id} item className={classes.innerContainer} xs={12} sm={6} md={4} lg={3}>
-      <Badge key={event.id} color="error" variant="dot">
-        <EventCard event={event} />
-      </Badge>
-    </Grid>
-  ));
-
+  const eventCards = events?.map((event) => {
+    if (event.name.toLowerCase().includes(searchTerm.toLowerCase())) {
+      return (
+        <Grid
+          key={event.id}
+          item
+          className={classes.innerContainer}
+          xs={12}
+          sm={6}
+          md={4}
+          lg={3}
+        >
+          <Badge key={event.id} color="error" variant="dot">
+            <EventCard event={event} />
+          </Badge>
+        </Grid>
+      );
+    }
+  });
 
   useEffect(() => {
     dispatch(getAllEvents());
