@@ -10,7 +10,6 @@ import { MuiPickersUtilsProvider } from "@material-ui/pickers";
 import DateFnsUtils from "@date-io/date-fns";
 import "./Index.css";
 
-
 //REDUX START
 import { createStore, combineReducers, applyMiddleware } from "redux";
 import { Provider } from "react-redux";
@@ -21,6 +20,8 @@ import { CategoriesReducer } from "./redux/reducers/CategoriesReducer";
 import { NotificationReducer } from "./redux/reducers/NotificationReducer";
 import { GuestReducer } from "./redux/reducers/GuestReducer";
 import { CommentsReducer } from "./redux/reducers/CommentsReducer";
+import { SearchReducer } from "./redux/reducers/SearchReducer";
+
 const rootReducer = combineReducers({
   AuthenticationReducer: AuthenticationReducer,
   EventsReducer: EventsReducer,
@@ -28,12 +29,12 @@ const rootReducer = combineReducers({
   GuestReducer: GuestReducer,
   NotificationReducer: NotificationReducer,
   CommentsReducer: CommentsReducer,
+  SearchReducer: SearchReducer,
 });
 // const composeEnhancer = compose(applyMiddleware(thunk), devToolsEnhancer());
 const store = createStore(rootReducer, applyMiddleware(thunk));
 
 //REDUX END
-
 
 const baseUrl = document.getElementsByTagName("base")[0].getAttribute("href");
 const rootElement = document.getElementById("root");

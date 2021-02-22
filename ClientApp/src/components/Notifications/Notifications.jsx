@@ -17,7 +17,6 @@ export default function EventCardModal({ open, handleClose }) {
   );
   const dispatch = useDispatch();
 
-  console.log(notifications);
   useEffect(() => {
     let unmounted = false;
     if (!unmounted) {

@@ -23,11 +23,14 @@ const useStyles = makeStyles({
 
 function App() {
   const classes = useStyles();
+  const [searchTerm, setSearchTerm] = React.useState("");
   return (
     <Paper className={classes.root}>
-      <Navbar />
+      <Navbar setSearchString={setSearchTerm} />
       <Switch>
-        <Route exact path="/" component={Home} />
+        <Route exact path="/">
+          <Home searchTerm={searchTerm} />
+        </Route>
         <Route exact path="/login" component={Login} />
         <Route exact path="/register" component={Register} />
         <Route component={NotFound} />

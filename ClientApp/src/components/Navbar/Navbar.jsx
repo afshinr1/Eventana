@@ -17,13 +17,16 @@ import { useHistory } from "react-router-dom";
 import CreateEvent from "../CreateEvent/CreateEvent";
 import { toast } from "react-toastify";
 import Notifications from "../Notifications/Notifications";
+import { setSearchTerm } from "../../redux/actions/SearchActions";
+import { useDispatch } from "react-redux";
 
-export default function Navbar() {
+export default function Navbar({setSearchString}) {
   const classes = useStyles();
   const [anchorEl, setAnchorEl] = useState(null);
   const [openNotifications, setOpenNotifications] = useState(false);
   const [search, setSearch] = useState("");
 
+  const dispatch = useDispatch();
   const history = useHistory();
   const isMenuOpen = Boolean(anchorEl);
   const token = sessionStorage.getItem("token");
@@ -46,6 +49,9 @@ export default function Navbar() {
       toast.success("Logout successful");
       history.push("/login");
     }
+  };
+  const handleSearch = (e) => {
+    setSearchString(e.target.value);
   };
 
   const menuId = "primary-search-account-menu";
@@ -107,7 +113,7 @@ export default function Navbar() {
               <SearchIcon />
             </div>
             <InputBase
-            onChange={e => setSearch(e.target.value) }
+              onChange={handleSearch}
               placeholder="Search…"
               classes={{
                 root: classes.inputRoot,
