@@ -3,12 +3,15 @@ import { useStyles } from "./Details.styles";
 import React, { useState, useEffect } from "react";
 import { addNotification } from "../../redux/actions/NotificationActions";
 import { useDispatch } from "react-redux";
+import Payment from "../Payment/Payment";
 
 function Details({ event }) {
   const dispatch = useDispatch();
   const classes = useStyles();
   const user = JSON.parse(sessionStorage.getItem("user"));
   const [attendanceType, setAttendanceType] = useState("");
+  const [open, setOpen] = useState(false);
+
   const categoryList = event.categories
     .split(",")
     .map((category, index) => (
@@ -24,6 +27,13 @@ function Details({ event }) {
         setAttendanceType(data.type);
       }
     }
+  };
+  const openModal = (e) => {
+    setOpen(true);
+    handleAttendance("attending");
+  };
+  const handleClose = () => {
+    setOpen(false);
   };
 
   useEffect(() => {
@@ -125,7 +135,7 @@ function Details({ event }) {
       </Grid>
       <Grid item container justify="space-between" direction="row" xs={12}>
         <Button
-          onClick={(e) => handleAttendance("attending")}
+          onClick={(e) => openModal(e)}
           className={classes.btn}
           variant="outlined"
           color={attendanceType === "attending" ? "secondary" : "primary"}
@@ -152,6 +162,7 @@ function Details({ event }) {
           Not Attending
         </Button>
       </Grid>
+      <Payment open={open} handleClose={handleClose} amount={event.fee}/>
     </Grid>
   );
 }

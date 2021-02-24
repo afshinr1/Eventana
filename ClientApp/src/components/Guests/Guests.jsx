@@ -6,7 +6,7 @@ import Typography from "@material-ui/core/Typography";
 import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
 import { Backdrop, Box } from "@material-ui/core";
 import { useStyles } from "./Guests.styles";
-import CircularProgress from '@material-ui/core/CircularProgress';
+import CircularProgress from "@material-ui/core/CircularProgress";
 
 export default function Guests({ event }) {
   const classes = useStyles();
@@ -27,19 +27,19 @@ export default function Guests({ event }) {
       let data = await response.json();
       console.log(data);
       setLoading(false);
-      data.forEach(guest => {
-          switch (guest.type) {
-            case "attending":
-              setAttending(prevAttending => [...prevAttending, guest.username])
-              break;
+      data.forEach((guest) => {
+        switch (guest.type) {
+          case "attending":
+            setAttending((prevAttending) => [...prevAttending, guest.username]);
+            break;
           case "maybe":
-            setMaybe(prevMaybe => [...prevMaybe, guest.username])
-              break;
+            setMaybe((prevMaybe) => [...prevMaybe, guest.username]);
+            break;
           case "not attending":
-            setNotAttending(prev => [...prev, guest.username])
-              break;
-          }
-      })
+            setNotAttending((prev) => [...prev, guest.username]);
+            break;
+        }
+      });
     }
   };
 
@@ -49,7 +49,7 @@ export default function Guests({ event }) {
 
   return (
     <Box component="div" className={classes.root}>
-      <Backdrop className={classes.backdrop} open={loading} >
+      <Backdrop className={classes.backdrop} open={loading}>
         <CircularProgress color="inherit" />
       </Backdrop>
       <Box className={classes.header}>
@@ -65,13 +65,14 @@ export default function Guests({ event }) {
           aria-controls="panel1bh-content"
           id="panel1bh-header"
         >
-          <Typography className={classes.heading}>Attending - {attending.length}</Typography>
+          <Typography className={classes.heading}>
+            Attending - {attending.length}
+          </Typography>
         </AccordionSummary>
         <AccordionDetails>
-          <Typography>
-            Nulla facilisi. Phasellus sollicitudin nulla et quam mattis feugiat.
-            Aliquam eget maximus est, id dignissim quam.
-          </Typography>
+          {attending.map((guest) => (
+            <Typography>{guest}</Typography>
+          ))}
         </AccordionDetails>
       </Accordion>
       <Accordion
@@ -84,14 +85,14 @@ export default function Guests({ event }) {
           aria-controls="panel2bh-content"
           id="panel2bh-header"
         >
-          <Typography className={classes.heading}>Maybe - {maybe.length}</Typography>
+          <Typography className={classes.heading}>
+            Maybe - {maybe.length}
+          </Typography>
         </AccordionSummary>
         <AccordionDetails>
-          <Typography>
-            Donec placerat, lectus sed mattis semper, neque lectus feugiat
-            lectus, varius pulvinar diam eros in elit. Pellentesque convallis
-            laoreet laoreet.
-          </Typography>
+          {maybe.map((guest) => (
+            <Typography>{guest}</Typography>
+          ))}
         </AccordionDetails>
       </Accordion>
       <Accordion
@@ -104,13 +105,14 @@ export default function Guests({ event }) {
           aria-controls="panel3bh-content"
           id="panel3bh-header"
         >
-          <Typography className={classes.heading}>No - {notAttending.length}</Typography>
+          <Typography className={classes.heading}>
+            No - {notAttending.length}
+          </Typography>
         </AccordionSummary>
         <AccordionDetails>
-          <Typography>
-            Nunc vitae orci ultricies, auctor nunc in, volutpat nisl. Integer
-            sit amet egestas eros, vitae egestas augue. Duis vel est augue.
-          </Typography>
+          {notAttending.map((guest) => (
+            <Typography>{guest}</Typography>
+          ))}
         </AccordionDetails>
       </Accordion>
       <Accordion

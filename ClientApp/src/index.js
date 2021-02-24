@@ -36,6 +36,7 @@ const store = createStore(rootReducer, applyMiddleware(thunk));
 
 //REDUX END
 
+
 const baseUrl = document.getElementsByTagName("base")[0].getAttribute("href");
 const rootElement = document.getElementById("root");
 
@@ -44,7 +45,7 @@ ReactDOM.render(
     <ThemeProvider theme={theme}>
       <BrowserRouter basename={baseUrl}>
         <MuiPickersUtilsProvider utils={DateFnsUtils}>
-          <App />
+            <App />
         </MuiPickersUtilsProvider>
       </BrowserRouter>
     </ThemeProvider>
